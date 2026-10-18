@@ -14,4 +14,13 @@ You can test this Java project instantly in your browser using GitHub Codespaces
 2. Once the cloud terminal opens, compile the Java source code:
    ```bash
    javac -d bin src/rpnCalc.java
-   java -cd src/rpnCalc.java
+   java -cp bin rpnCalc
+
+
+## Features:
+
+Custom Stack Implementation: Built from scratch using a linked list rather than relying on built-in collections.
+
+Expression Evaluation: Processes comma-separated RPN expressions safely.
+
+Error Handling: Robust checks for malformed input, invalid tokens, and division by zero.
