@@ -7,7 +7,7 @@
 ## Live Test in Browser (No Setup Required!)
 You can test this Java project instantly in your browser using GitHub Codespaces—no local Java setup required:
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/yanis-devs/rpn-calculator)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/login?return_to=%2Fcodespaces%2Fnew%3Frepo%3Dyanis-devs%2Fatm-simulator)
 
 ### How to Run:
 1. Click the **Open in GitHub Codespaces** button above.
