@@ -1,0 +1,13 @@
+I built this RPN calculator in Java using a menu-based setup, and for the most part, the core logic works exactly how it should. It handles the comma-separated inputs fine and doesn’t have any trouble with negative numbers, decimals, or mixed operations. The menu is also solid enough that it won’t crash if a user enters something weird, and it exits cleanly.
+
+The hardest part was definitely the evaluateRPN method. It turned messy once I started adding checks for things like division by zero, extra numbers, or missing operators. I ended up using some flags to keep track of errors, which altogether made the code harder to read and a pain to debug. It took a lot of trial and error (and a ton of testing) to get the error messages to trigger in the right order, but I eventually got everything lined up with the assignment specs.
+
+Once the logic was finally working, I spent a good amount of time polishing and organizing the code. I didn’t want it to look like a "work in progress" so I focused on:
+
+Documentation: I made sure the Javadoc comments were descriptive and concise, and I added inline comments to explain why I used certain error flags and variables in the start of the evaluateRPN method.
+
+Structure: I cleaned up the formatting, fixed the indentation, removed awkward spaces and extra lines and renamed some of the more vague variables to make the flow easier to follow.
+
+Final Look: I removed all the "print statement" debugging I was doing earlier and organized the imports to keep the file tidy, and made sure I used the ANSII coloring and text-customization properly and cleanly.
+
+Even though the evaluateRPN method is still a bit more complex than I’d like, I’m happy with how fine-tuned and readable the final version turned out.

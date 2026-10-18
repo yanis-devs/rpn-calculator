@@ -1,0 +1,170 @@
+
+RPN Calculator - Pseudocode
+===========================
+Brief: Reverse Polish Notation calculator using a linked-list stack and a simple text menu.
+       Includes supporting linked list utilities and colored console output constants.
+
+DATA STRUCTURES & SUPPORTING CLASSES
+-----------------------------------
+Class: Node
+- Fields:
+    - data: double
+    - next: Node (reference to next node)
+- Constructor(data):
+    - set this.data = data
+    - set this.next = null
+
+Class: LinkedList
+- Fields:
+    - head: Node (start of the list)
+- Methods:
+    - insert(data):
+        - create newNode with data
+        - if head is null, set head = newNode and return
+        - otherwise traverse from head to last node
+        - set lastNode.next = newNode
+    - insertB(data):   // insert at beginning
+        - create newNode with data
+        - set newNode.next = head
+        - set head = newNode
+    - display():
+        - current = head
+        - while current != null:
+            - print current.data with separator
+            - current = current.next
+        - print end marker
+    - search(data):
+        - current = head
+        - while current != null:
+            - if current.data == data:
+                - print "Found!" and return true
+            - else:
+                - (prints placeholder in original code)
+            - current = current.next
+        - print "Not found" and return false
+    - removeFirstNode():
+        - if head != null: set head = head.next
+    - remove(data):
+        - current = head
+        - while current.next != null:
+            - if current.next.data == data:
+                - skip that node by setting current.next = current.next.next
+            - else:
+                - current = current.next
+    - removeLastNode():
+        - current = head
+        - if current == null:
+            - print "list only has the head // empty list!" and return
+        - if current.next == null:
+            - head = null; print "the only node got removed"; return
+        - while current != null:
+            - if current.next.next == null:
+                - set current.next = null (remove last)
+            - current = current.next
+
+Class: StackLL (stack built with Node)
+- Fields:
+    - top: Node
+- Constructor:
+    - top = null
+- Methods:
+    - push(value):
+        - create newNode with value
+        - set newNode.next = top
+        - set top = newNode
+    - pop():
+        - if top == null: return -1 (error sentinel in original)
+        - store popped = top.data
+        - set top = top.next
+        - return popped
+    - peek():
+        - if top == null: print error message and return NaN
+        - return top.data
+    - isEmpty():
+        - return top == null
+
+MAIN APPLICATION: rpnCalc
+-------------------------
+Main:
+- create Scanner scan
+- runs = true
+- print welcome banner (uses color constants)
+- while runs:
+    - call menu() to print options
+    - read user input safely in a loop:
+        - try to parse int from input
+        - if parsed value between 1 and 3: break loop
+        - otherwise prompt for 1-3
+        - on parse error prompt again
+    - switch(choice):
+        - case 1:
+            - call viewInstructions()
+            - break
+        - case 2:
+            - expr = promptForExpression(scan)
+            - result = evaluateRPN(expr)
+            - print result
+            - break
+        - case 3:
+            - close scanner
+            - runs = false (exit main loop)
+            - break
+        - default:
+            - print invalid message (should not occur due to validation)
+            - continue loop
+
+Method: evaluateRPN(exp: String) -> double
+- Purpose: evaluate a comma-separated RPN expression and return result; returns NaN on errors.
+- Local variables:
+    - delimiter = ","
+    - stack = new StackLL()
+    - tokens = split(exp, delimiter)
+    - validOperators = ["+", "-", "/", "*"]
+    - numCounter = 0    // count of numeric values currently on stack
+    - exceptionOccurred = false  // tracks that at least one operator was processed
+    - operatorIsValid = false
+    - divisionIsPossible = true  // used to detect divide-by-zero when popping operands
+- Algorithm:
+    - for each token in tokens:
+        - operatorIsValid = false
+        - try to parse token as double -> number
+            - if parse succeeds:
+                - stack.push(number)
+                - numCounter++
+        - catch NumberFormatException (token is not a number):
+            - check if token is in validOperators; if so operatorIsValid = true
+            - if operatorIsValid:
+                - exceptionOccurred = true
+                - if numCounter < 2:
+                    - print "ERROR! not enough numbers..." and return NaN
+                - a = stack.pop()   // top operand
+                - if a == 0 then set divisionIsPossible = false
+                - b = stack.pop()   // second operand
+                - switch token:
+                    - "+": push (a + b); numCounter--
+                    - "-": push (b - a); numCounter--
+                    - "*": push (a * b); numCounter--
+                    - "/": if !divisionIsPossible: print error and return NaN
+                           else push (b / a); numCounter--
+            - else:
+                - print "ERROR! illegal character or invalid operator..." and return NaN
+    - after processing all tokens:
+        - if numCounter >= 2 and exceptionOccurred == false:
+            - print "ERROR! missing an operator." and return NaN
+        - if numCounter != 1:
+            - print "ERROR! insufficient number of operators or empty tokens." and return NaN
+        - return stack.peek()  // final result
+
+Helper Methods:
+- menu():
+    - print menu text and options 1-3
+- viewInstructions():
+    - print RPN instructions and examples, available operators, decimals/negatives allowed, etc.
+- promptForExpression(Scanner s) -> String:
+    - prompt user, read a line from scanner, trim, and return it
+
+Class: C (Console color constants)
+- A collection of string constants to produce ANSI color/output formatting for console text.
+
+
+End of pseudocode.
